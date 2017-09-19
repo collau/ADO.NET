@@ -1,0 +1,47 @@
+private void button1_Click(object sender, EventArgs e)
+        {
+            //Specify connection string
+            string cnS = "data source=(local);initial catalog=Dafesty_BOR31005;" + "user id=sa; password=password-12";
+            
+            //establish connection to database
+            SqlConnection cn = new SqlConnection(cnS);
+            
+            //specify SQL command to be carried out if rating value is not entered
+            if (textBox1.TextLength==0)
+            {
+                sql = "Select * from Movies";
+            }
+            else
+            
+            //specify SQL command to be carried out if rating value is entered
+            {
+                sql = "Select * from Movies where Rating ='" + textBox1.Text + "'";
+            }
+            SqlCommand cm = new SqlCommand(sql, cn);
+
+　
+            //Start connection process
+            cn.Open();
+            
+            //clear all items first to prevent repeated population
+            listBox1.Items.Clear();
+            
+            //Use DataReader in conjunction with ExecuteReader method
+            SqlDataReader rd = cm.ExecuteReader();
+            
+            //retrieve all data from table
+            while (rd.Read())
+            {
+                listBox1.Items.Add(rd[1].ToString());
+            }
+            
+            //show the count of items populated
+            MessageBox.Show("There are "+listBox1.Items.Count.ToString()+" movies.");
+            
+            //close DataReader object
+            rd.Close();
+            
+            //End Connection Process
+            cn.Close();
+
+        }
