@@ -1,0 +1,25 @@
+private void button1_Click(object sender, EventArgs e)
+        {
+            //Specify connection string
+            string conString = "data source=(local); initial catalog=Dafesty_BOR31005;" + "user id=sa; password=password-12";
+
+            //establish connection to SQL Client
+            SqlConnection cn = new SqlConnection(conString);
+
+            //specify SQL command to be carried out
+            string sql = "Update Movies Set RentalPrice =" + textBox2.Text + "where VideoCode =" + textBox1.Text;
+            SqlCommand cm = new SqlCommand(sql, cn);
+
+            //Start Connection Process
+            cn.Open();
+
+            //Execute SQL non-query command
+            cm.ExecuteNonQuery();
+
+            //indicator that record has been updated
+            MessageBox.Show("Rental Price updated");
+
+            //End Connection Process
+            cn.Close();
+
+        }
