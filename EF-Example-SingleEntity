@@ -1,0 +1,165 @@
+Creating Entity Data Model
+
+C# --> Data --> Entity Data Model
+Select --> Dafesty --> dbo --> Customers (Model Namespace = DafestyModel)
+
+
+Run XML code to see SSDL, CSDL, 
+
+
+
+button1_Click
+{
+  DafestyEntities context = new EFDemo.DafestyEntities();
+  dataGridView1.DataSource = context.Customers.ToList();
+}
+
+
+//Writing LINQ
+button1_Click
+{
+  DafestyEntities context = new EFDemo.DafestyEntities();
+  
+  var q = from x in context.Customers where x.CustomerID == "1111" select;
+  //q is a query
+  Customer c = q.First(); //if there are many records
+  label1.Text = c.CustomerName; //display customer name of customer c, which is the first record of all customers with customerID 1111
+}
+
+
+
+button1_Click
+{
+  DafestyEntities context = new EFDemo.DafestyEntities();
+  object o = "Venkat"; //permissible because string is a an object. Child class can be assigned to parent class
+  //However, o.Length --> is not permissible because Length is a method of String. We will need to do a casting to cast the object as a string
+  ((string)o).Length --> is permissible
+  
+  var o = "Venkat";
+  o.Length --> is permissible because compiler determines the type
+}
+
+
+
+button1_Click
+{
+  DafestyEntities context = new EFDemo.DafestyEntities();
+  
+  var q = from x in context.Customers where x.CustomerID == "1111" select; (select? or select x?)
+  //q is a query
+  Customer c = q.First(); //if there are many records
+  label1.Text = c.CustomerName; //display customer name of customer c, which is the first record of all customers with customerID 1111
+  label1.Text = q.GetType().ToString();
+}
+
+
+button1_Click (display all customers with MemberCategory "A")
+{
+  DafestyEntities context = new EFDemo.DafestyEntities();
+  
+  var q = from x in context.Customers where x.MemberCategory == "A" select x;
+  dataGridView1.DataSource = q.ToList(); 
+}
+
+
+button1_Click (display all customers with MemberCategory "A" and names starting with N)
+{
+  DafestyEntities context = new EFDemo.DafestyEntities();
+  
+  var q = from x in context.Customers where x.MemberCategory == "A" && x.CustomerName.Substring(0,1) == "N" select x;
+  dataGridView1.DataSource = q.ToList(); 
+}
+
+
+
+button1_Click (Lambda)
+//Lambda will keep stacking.
+{
+  DafestyEntities context = new EFDemo.DafestyEntities();
+  
+  //can see Methods of Context.Customers
+  Customer c = context.Customers.Where(x => x.CustomerID == "1111").First(); //=> is is.
+  label1.Text = c.CustomerName;
+}
+
+
+button1_Click (Lambda practice for list to display all customers with MemberCategory "A" and names starting with N)
+{
+  DafestyEntities context = new EFDemo.DafestyEntities();
+  
+  /*
+  Customer c = context.Customers.Where(x => x.MemberCategory == "A" && x.CustomerName.Substring(0,1) == "N");
+  dataGridView1.DataSource = c.ToList();
+  */
+  
+  List<Customer> clist = context.Customers.Where(x => x.MemberCategory == "A" && x.CustomerName.Substring(0,1) == "N").ToList();
+  dataGridView1.DataSource = clist;
+}
+
+
+button1_Click (count number of customers of MemberCategory A)
+{
+  DafestyEntities context = new EFDemo.DafestyEntities();
+  
+  int count = context.Customers.Count(x => x.MemberCategory=="A");
+  label1.Text = count.ToString(); //ToString() is necessary because Text is a string variable
+}
+
+
+button1_Click (sum of Amount Spent)
+{
+  DafestyEntities context = new EFDemo.DafestyEntities();
+  
+  
+  decimal? sum = context.Customers.Sum(x => x.AmountSpent); //can i use double here?; "?" enables the acceptance of null values.
+  //decimal? sum = context.Customers.Where(x => x.MemberCategory =="A").Sum(y => y.AmountSpent); --> sum of amount spent of Cat A members
+  label1.Text = sum.ToString(); //ToString() is necessary because Text is a string variable
+}
+
+
+button1_Click (CREATE table with only CustomerID, CustomerName and MemberCategory)
+{
+  DafestyEntities context = new EFDemo.DafestyEntities();
+    
+  var q = from x in context.Customers select new {x.CustomerID, x.CustomerName, x.MemberCategory};
+  /*
+  an anonymous class is created, and only has attributes
+  
+  
+  */
+  dataGridView1.DataSource = q.ToList();
+}
+
+
+button1_Click
+{
+  DafestyEntities context = new EFDemo.DafestyEntities();
+    
+  var q = from x in context.Customers where x.CusomterID =="1111" select new {x.CustomerID, x.CustomerName, x.MemberCategory};
+  /*
+  an anonymous class is created, and only has attributes
+  */
+  Customer cccc = q.First(); //**THIS WILL NOT WORK AS IT IS NOT A CUSTOMER CLASS, BUT ANONYMOUS CLASS IS CREATED**
+  dataGridView1.DataSource = q.ToList();
+}
+
+
+
+
+{
+  //create new customers
+  Customer c1 = new Customer();
+  Customer c2 = new Customer();
+  Customer c3 = new Customer();
+  
+  List<Customer> clist = new List<Customer>();
+  clist.Add(c1);
+  clist.Add(c2);
+  clist.Add(c3);
+  
+  clist.Add(new Customer()); //anonymous object is created and added to list
+}
+
+
+Exploratory Exercises
+Make the datagrid cells auto expand, make columns editable/non-editable, make ColumnName editable
