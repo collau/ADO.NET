@@ -1,0 +1,79 @@
+Create new data entity - using Country and Customer
+
+button1_Click
+{
+  DafestyEntity context = new DafestyEntity();
+  
+  Customer c = context.Customers.Where(x => x.CustomerID == "1000).First();
+  
+  label1.Text = c.CustomerName + " " + c.Country.CountryName
+}
+
+button1_Click
+{
+  DafestyEntity context = new DafestyEntity();
+  
+  Country cn = context.Countries.Where(x => x.CountryCode == "SWZ").First(); //check EntitySetName
+  label1.Text = cn.CountryName;
+  
+  //loop; because this is a one-to-many association
+  foreach(Customer c in cn.Customers)
+  {
+    label1.Text += Environment.NewLine + c.CustomerName;
+  }
+}
+
+button1_Click (update database)
+{
+  DafestyEntity context = new DafestyEntity();
+  
+  Customer c = context.Customers.Where(x => x.CustomerID == "1000).First();
+  
+  c.MemberCategory = "G";
+  context.SaveChanges();
+}
+
+
+button1_Click (create new customer/insert row in database)
+{
+  DafestyEntity context = new DafestyEntity();
+  
+  Customer c = new Customer(); //new Customer object
+  
+  //creating attributes for customer
+  c.CustomerID = "1009";
+  c.CustomerName = "EF Cust";
+  c.MemberCategory = "A";
+  
+  context.Customers.Add(c); //adding the record into database
+  context.SaveChanges();  //save changes
+}
+
+
+button1_Click (Update null field, using a record from somewhere else)
+{
+  DafestyEntity context = new DafestyEntity();
+  
+  Customer c = context.Customers.Where(x => x.CustomerID = "1009").First(); //Retrieve customer whose ID is 1009
+  Country cn = context.Countries.Where(x => CountryCode == "MAL").First(); //Retreive country which code is MAL
+  
+  c.Country = cn; //
+  /* also can use the following code
+  cn.Customers.Add(c);
+  
+  context.SaveChanges();  //save changes
+}
+
+
+
+
+button1_Click (delete record in database)
+{
+  DafestyEntity context = new DafestyEntity();
+  
+  Customer c = context.Customers.Where(x => x.CustomerID = "1009").First(); //Retrieve customer whose ID is 1009
+  context.Customers.Remove(c) //Remove record (Customer whose ID is 1009) from database
+  
+  context.SaveChanges();  //save changes
+}
+
