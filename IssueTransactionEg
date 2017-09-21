@@ -51,3 +51,42 @@ button1_Click
       
       ts.Complete();
     }
+
+
+
+
+CustomerLookupButton_Click
+/*ENCAPSULATION because f.label1.Text can be hardcoded
+Must set property.
+{
+  //f.label1.Text = "Get Lost"
+  CustomerSearchForm f = new CustomerSearchForm();
+  Dialog r = f.ShowDialog();
+  //CIDTextBox.Text = f.label1.Text;
+  
+  if (r==DialogResult.OK) //will populate value when OK is pressed, but not cancel
+  {
+    CIDTextBox.Text = f.CIDValue;
+  }
+}
+
+
+CustomerSearchForm_Load
+{
+  DafestyEntities context = new DafestyEntities();
+  dataGridView1.DataSource = context.Customers.ToList();
+  
+  //select customerID value and use it to populate main form
+  
+}
+
+OKButton_Click
+{
+  DialogResult = DialogResult.OK;
+  // label1.Text = dataGridView1.CurrentRow.Cells[0].Value.ToString(); //must set to PUBLIC, but cannot use due to encapsulation
+}
+
+CancelButton_Click
+{
+  DialogRsult = DialogResult.Cancel;
+}
