@@ -1,0 +1,49 @@
+//Qn 01
+private void query_Click(object sender, EventArgs e)
+{
+  Dafesty2MoviesEntities context = new Dafesty2MoviesEntities();
+  var q = from x in context.Movies select x;
+  dataGridView1.DataSource = q.ToList();
+}
+        
+//Qn 02
+        private void query_Click(object sender, EventArgs e)
+        {
+            Dafesty2MoviesEntities context = new Dafesty2MoviesEntities();
+            var q = from x in context.Movies order by x.MovieTitle select x;
+            dataGridView1.DataSource = q.ToList();
+        }
+        
+//Qn 03
+        private void query_Click(object sender, EventArgs e)
+        {
+            Dafesty2MoviesEntities context = new Dafesty2MoviesEntities();
+            var q = from x in context.Movies orderby x.RentalPrice descending select x;
+            dataGridView1.DataSource = q.ToList();
+        }
+
+//Qn 04
+        private void query_Click(object sender, EventArgs e)
+        {
+            Dafesty2MoviesEntities context = new Dafesty2MoviesEntities();
+            var q = from x in context.Movies where x.Rating == "R" select x;
+            dataGridView1.DataSource = q.ToList();
+        }
+        
+//Qn 05
+        private void query_Click(object sender, EventArgs e)
+        {
+            Dafesty2MoviesEntities context = new Dafesty2MoviesEntities();
+            var q = from x in context.Movies where x.MovieType == "Sci-fi" && x.ProducerID == "Warner" select x;
+            dataGridView1.DataSource = q.ToList();
+        }
+        
+//Qn 06
+        private void query_Click(object sender, EventArgs e)
+        {
+            Dafesty2MoviesEntities context = new Dafesty2MoviesEntities();
+            var q = from x in context.Movies where x.MovieType == "Action" select x;
+            label1.Text = q.Count().ToString();
+        }
+        
+//Qn 07
