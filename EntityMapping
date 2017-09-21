@@ -1,0 +1,35 @@
+Add new Entity Model --> Producer, ProducerWebsite
+
+Objective: Combine Entities
+
+Add new Scalar Property in Producer Entity --> Define it as Website
+
+See Mapping Details - Producer mapped to Producer, ProducerWebsite mapped to ProducerWebsite
+Under Producer--> Add Maps to ProducerWebSite
+
+ERROR: WEBSITE IS ALSO MAPPED TO THE SAME THING
+Delete Key:
+
+Now we only have one class called Producer, but we have 2 tables (One Entity, Two Tables)
+Hence working with one entity, but update both tables.
+
+
+DEMONSTRATION
+
+button1_Click
+{
+  DafestyEntities context = new DafestyEntities();
+  Producer p = context.Producers.Where(x => x.ProducerID == "Columbia").First();
+  label1.Text = p.ProducerName;
+  label2.Text = p.Website;
+  
+  //Create new producer
+  producer pp = new Producer();
+  pp.ProducerID = "Singa";
+  pp.ProducerName = "Singapore Movies";
+  pp.CountryCode = "SIN"
+  pp.Website = "www.singmovies.com";
+  
+  context.Producers.Add(pp);
+  context.SaveChanges();
+}
