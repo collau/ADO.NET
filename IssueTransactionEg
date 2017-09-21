@@ -88,5 +88,5 @@ OKButton_Click
 
 CancelButton_Click
 {
-  DialogRsult = DialogResult.Cancel;
+  DialogResult = DialogResult.Cancel;
 }
