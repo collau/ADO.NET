@@ -1,0 +1,53 @@
+Add reference --> browse --> select System.Transactions
+//adding dll file
+
+button1_Click
+{
+  DafestyEntities context = new DafestyEntities();
+  
+  //creates a transaction block
+  using(System.Transactions.TransactionScope ts = new TransactionScope)
+  {
+    // some changes1
+    context.SaveChanges();
+  
+    // some more changes2
+    context.SaveChanges();
+    
+    
+    
+    
+    ts.Complete();
+  }
+  // if changes2 did not go through, the whole transaction will be reversed to original state
+  // need to you for multiple [context.SaveChanges();], multiple [nonQuery].
+  
+  
+  
+  
+  VideoIssueForm_Load
+  DateDueDTP.Value = DateTime.Now.AddDays(2);
+  
+  
+  SubmitButton_Click
+  {
+    DafestyEntities context = new DafestyEntities();
+    
+    using (TransactionScope ts = new TransactionScope()) //all these changes will have to be successful for TransactionScope to complete
+    {
+      IssueTran it = new IssueTran();
+      it.CustomerID = CustomerIDTextBox.Tex;
+      it.VideoCode = Convert.ToInt16(VideoCodeTextBox.Text);
+      it.DateIssue = DateIssueDTP.Value; //DTP = date/time picker --> if only want the date, should use DateIssueDTP.Value.Date
+      it.DateDue = DateDueDTP.Value; //DTP = date/time picker --> if only want the date, should use DateIssueDTP.Value.Date
+      it.Remarks = RemarksTextBox.Text;
+      it.RentalStatus = "OUT";
+      
+      context.IssueTrans.Add(it);
+      
+      Movy m = context.Movies.Where(x => x.VideoCode == vc).First(); //create movie object
+      m.NumberRented++;
+      context.SaveChanges();
+      
+      ts.Complete();
+    }
