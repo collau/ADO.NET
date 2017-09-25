@@ -1,0 +1,15 @@
+//To counter System.Nullable error
+
+       {
+            Lib05Entities ctx = new Lib05Entities();
+            var qry = from x in ctx.BookIssued where x.DateActualReturn == null select new
+
+            {
+               x.TransactionNo, x.ISBN, x.BookTitle, x.DateBorrow, x.DateDue, DateActualReturn = x.DateActualReturn?? DateTime.MinValue,
+            };
+            
+            CrystalReport3 cr1 = new CrystalReport3();
+
+            cr1.SetDataSource(qry);
+            crystalReportViewer1.ReportSource = cr1;
+        }
